@@ -1,0 +1,21 @@
+target/
+web.xml
+.DS_Store
+.settings
+.classpath
+
+### VS Code ###
+.vscode/
+
+### IntelliJ ###
+.idea/
+*.iml
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+bin/
+.project
+/nbdist/
+/.nb-gradle/

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<jboss-web>
+    <!--See https://docs.jboss.org/author/display/WFLY/Java+Authentication+Service+Provider+Interface+for+Containers+%28JASPIC%29 -->
+    <!--for more information-->
+    <security-domain>jaspitest</security-domain>
+    <context-root>/</context-root>
+</jboss-web>

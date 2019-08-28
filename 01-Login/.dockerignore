@@ -1,0 +1,7 @@
+.gitignore
+.mvn/
+.idea/
+target/
+exec.sh
+exec.ps1
+README.md
