@@ -45,7 +45,6 @@ public class LoginServlet extends HttpServlet {
         );
 
         return authenticationController.buildAuthorizeUrl(request, redirectUrl)
-                .withAudience("https://" + config.getDomain() + "/userinfo")
                 .withScope(config.getScope())
                 .build();
     }
