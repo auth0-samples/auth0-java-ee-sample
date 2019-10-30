@@ -13,7 +13,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.auth0>1.0.4</version.auth0>
+    <!--  latest of version 1 -->
+    <version.auth0-mvc>[1.0, 2.0)</version.auth0-mvc>
     <version.jackson>2.9.9.2</version.jackson>
     <version.wildfly>2.0.1.Final</version.wildfly>
   </properties>
@@ -39,7 +40,7 @@
     <dependency>
       <groupId>com.auth0</groupId>
       <artifactId>mvc-auth-commons</artifactId>
-      <version>${version.auth0}</version>
+      <version>${version.auth0-mvc}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
