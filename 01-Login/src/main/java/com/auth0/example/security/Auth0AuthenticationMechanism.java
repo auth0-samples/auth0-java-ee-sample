@@ -49,7 +49,7 @@ public class Auth0AuthenticationMechanism implements HttpAuthenticationMechanism
             LOG.info("Is callback request");
 
             try {
-                Tokens tokens = authenticationController.handle(httpServletRequest);
+                Tokens tokens = authenticationController.handle(httpServletRequest, httpServletResponse);
                 Auth0JwtCredential auth0JwtCredential = new Auth0JwtCredential(tokens.getIdToken());
                 CredentialValidationResult result = identityStoreHandler.validate(auth0JwtCredential);
                 return httpMessageContext.notifyContainerAboutLogin(result);

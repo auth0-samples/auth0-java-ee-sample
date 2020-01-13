@@ -33,10 +33,10 @@ public class LoginServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOG.info("in LoginServlet");
-        response.sendRedirect(buildAuthUrl(request));
+        response.sendRedirect(buildAuthUrl(request, response));
     }
 
-    private String buildAuthUrl(HttpServletRequest request) {
+    private String buildAuthUrl(HttpServletRequest request, HttpServletResponse response) {
         String redirectUrl = String.format(
                 "%s://%s:%s/callback",
                 request.getScheme(),
