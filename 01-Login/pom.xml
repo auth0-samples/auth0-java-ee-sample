@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--  latest of version 1 -->
     <version.auth0-mvc>[1.0, 2.0)</version.auth0-mvc>
-    <version.jackson>2.9.9.2</version.jackson>
+    <version.jackson>2.9.10.7</version.jackson>
     <version.wildfly>2.0.1.Final</version.wildfly>
   </properties>
 
