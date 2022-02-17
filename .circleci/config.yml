@@ -1,5 +1,8 @@
 version: 2.1
-
+parameters:
+  machine_image:
+    type: string
+    default: ubuntu-2004:202201-02
 commands:
   setup-env:
     description: "Setup the environment"
@@ -71,7 +74,8 @@ commands:
 # Jobs and Workflows
 jobs:
   checkout:
-    machine: true
+    machine:
+      image: << pipeline.parameters.machine_image >>
     steps:
       - checkout
       - run: git clone https://github.com/auth0-samples/spa-quickstarts-tests test
@@ -81,7 +85,8 @@ jobs:
             - project
             - test
   test-login:
-    machine: true
+    machine:
+      image: << pipeline.parameters.machine_image >>
     steps:
       - setup-env:
           config-file: 01-Login/src/main/webapp/WEB-INF/web.xml
