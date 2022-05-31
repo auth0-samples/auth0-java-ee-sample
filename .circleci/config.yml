@@ -1,58 +1,49 @@
 version: 2.1
-parameters:
-  machine_image:
-    type: string
-    default: ubuntu-2004:202201-02
-commands:
-  setup-env:
-    description: "Setup the environment"
-    parameters:
-      config-file:
-        type: string
+
+orbs:
+  node: circleci/node@5.0.2
+  docker: circleci/docker@2.0.3
+
+jobs:
+  checkout:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - run: git clone https://github.com/auth0-samples/spa-quickstarts-tests test
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - test
+  test-login:
+    docker:
+      - image: cimg/node:lts
+    environment:
+      - AUTH0_CFG: 01-Login/src/main/webapp/WEB-INF/web.xml
+      - SAMPLE_PATH: 01-Login
     steps:
       - attach_workspace:
           at: ~/
       - run:
           name: Replace Auth0 test credentials
           command: |
-            mv <<parameters.config-file>>.example <<parameters.config-file>>
-            sed -i 's/{CLIENT_ID}/'$AUTH0_TEST_CLIENT_ID'/g' <<parameters.config-file>>
-            sed -i 's/{DOMAIN}/'$AUTH0_TEST_DOMAIN'/g' <<parameters.config-file>>
-            sed -i 's/{CLIENT_SECRET}/'$AUTH0_TEST_CLIENT_SECRET'/g' <<parameters.config-file>>
-
-  run-sample:
-    description: "Build and run the sample"
-    parameters:
-      sample-path:
-        type: string
-    steps:
-      - attach_workspace:
-          at: ~/
+            mv $AUTH0_CFG.example $AUTH0_CFG
+            sed -i 's/{CLIENT_ID}/'$AUTH0_TEST_CLIENT_ID'/g' $AUTH0_CFG
+            sed -i 's/{DOMAIN}/'$AUTH0_TEST_DOMAIN'/g' $AUTH0_CFG
+            sed -i 's/{CLIENT_SECRET}/'$AUTH0_TEST_CLIENT_SECRET'/g' $AUTH0_CFG
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: Build and run docker image
           command: |
-            docker build -t $CIRCLE_JOB ./<<parameters.sample-path>>
-            docker run -d -it -p 3000:8080 --name $CIRCLE_SHA1 $CIRCLE_JOB
-          background: true
+            docker build -t $CIRCLE_JOB ./$SAMPLE_PATH
+            docker run -d -p 3000:8080 --name $CIRCLE_SHA1 $CIRCLE_JOB
       - run:
-          name: Wait until server is online
+          name: Wait for app to be available
           command: |
-            attempt_counter=0
-            max_attempts=15
-            until $(curl --silent --head --output /dev/null --fail http://localhost:3000); do
-                if [ ${attempt_counter} -eq ${max_attempts} ];then
-                  echo "Could not reach server"
-                  exit 1
-                fi
-                attempt_counter=$(($attempt_counter+1))
-                sleep 5
-            done
-
-  run-func-tests:
-    description: "Execute the functional tests"
-    steps:
-      - attach_workspace:
-          at: ~/
+            sleep 10
+            docker run --network host --rm appropriate/curl --retry 8 --retry-connrefused -v localhost:3000
       - run:
           name: Run tests
           working_directory: test
@@ -70,29 +61,6 @@ commands:
           when: on_fail
       - store_artifacts:
           path: /tmp/out
-
-# Jobs and Workflows
-jobs:
-  checkout:
-    machine:
-      image: << pipeline.parameters.machine_image >>
-    steps:
-      - checkout
-      - run: git clone https://github.com/auth0-samples/spa-quickstarts-tests test
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - test
-  test-login:
-    machine:
-      image: << pipeline.parameters.machine_image >>
-    steps:
-      - setup-env:
-          config-file: 01-Login/src/main/webapp/WEB-INF/web.xml
-      - run-sample:
-          sample-path: 01-Login
-      - run-func-tests
 
 workflows:
   version: 2
