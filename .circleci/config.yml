@@ -78,7 +78,7 @@ jobs:
       image: << pipeline.parameters.machine_image >>
     steps:
       - checkout
-      - run: git clone --branch chore/update-deps https://github.com/auth0-samples/spa-quickstarts-tests test
+      - run: git clone https://github.com/auth0-samples/spa-quickstarts-tests test
       - persist_to_workspace:
           root: ~/
           paths:
