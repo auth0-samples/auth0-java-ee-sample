@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
                 request.getServerPort()
         );
 
-        return authenticationController.buildAuthorizeUrl(request, redirectUrl)
+        return authenticationController.buildAuthorizeUrl(request, response, redirectUrl)
                 .withScope(config.getScope())
                 .build();
     }
