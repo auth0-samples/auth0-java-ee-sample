@@ -10,8 +10,8 @@
   <name>Auth0 Java EE Security Sample</name>
 
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--  latest of version 1 -->
     <version.auth0-mvc>[1.0, 2.0)</version.auth0-mvc>
@@ -58,6 +58,7 @@
         <version>${version.wildfly}</version>
         <configuration>
           <javaOpts>-Djboss.http.port=3000</javaOpts>
+          <version>20.0.1.Final</version>
         </configuration>
       </plugin>
     </plugins>
