@@ -16,7 +16,7 @@
     <!--  latest of version 1 -->
     <version.auth0-mvc>[1.0, 2.0)</version.auth0-mvc>
     <version.jackson>2.15.2</version.jackson>
-    <version.wildfly>20.0.1.Final</version.wildfly>
+    <version.wildfly>23.0.2.Final</version.wildfly>
   </properties>
 
   <dependencies>
@@ -55,10 +55,10 @@
       <plugin>
         <groupId>org.wildfly.plugins</groupId>
         <artifactId>wildfly-maven-plugin</artifactId>
-        <version>${version.wildfly}</version>
+        <version>4.1.0.Final</version>
         <configuration>
           <javaOpts>-Djboss.http.port=3000</javaOpts>
-          <version>20.0.1.Final</version>
+          <version>${version.wildfly}</version>
         </configuration>
       </plugin>
     </plugins>
