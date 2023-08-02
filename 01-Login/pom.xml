@@ -55,7 +55,7 @@
       <plugin>
         <groupId>org.wildfly.plugins</groupId>
         <artifactId>wildfly-maven-plugin</artifactId>
-        <version>4.1.0.Final</version>
+        <version>4.2.0.Final</version>
         <configuration>
           <javaOpts>-Djboss.http.port=3000</javaOpts>
           <version>${version.wildfly}</version>
